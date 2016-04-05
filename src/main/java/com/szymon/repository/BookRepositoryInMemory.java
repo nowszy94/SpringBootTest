@@ -4,6 +4,7 @@ import com.szymon.domain.Book;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,11 +13,11 @@ import java.util.List;
 @Component
 public class BookRepositoryInMemory implements BookRepository {
 
-    private List<Book> bookList = new ArrayList<Book>();
+    private List<Book> bookList = Collections.synchronizedList(new ArrayList<Book>());
 
 
     public Book findOne(int id) {
-        if(id < 0 || id >= bookList.size())
+        if (id < 0 || id >= bookList.size())
             return null;
         return bookList.get(id);
     }
@@ -26,7 +27,7 @@ public class BookRepositoryInMemory implements BookRepository {
     }
 
     public Book delete(int id) {
-        if(id < 0 || id >= bookList.size())
+        if (id < 0 || id >= bookList.size())
             return null;
         Book temp = bookList.remove(id);
         return temp;
