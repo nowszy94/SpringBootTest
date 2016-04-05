@@ -21,7 +21,7 @@ public class BookController {
     private BookRepository bookRepository;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Book get(@PathVariable("id") int id){
+    public Book get(@PathVariable("id") int id) {
         return bookRepository.findOne(id);
     }
 
@@ -30,14 +30,13 @@ public class BookController {
         return bookRepository.listAll();
     }
 
-    @RequestMapping(value = "/{id}" ,method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Book delete(@PathVariable("id") int id) {
         return bookRepository.delete(id);
     }
 
 
-
-    // Metoda testowa, potrzebna do wypelnienia czyms bazy
+    // Method to POST some default books. Can be used for testing.
     @RequestMapping(value = "/addBasicBooks")
     public List<Book> addBasicBooks() {
         Book book = new Book();
@@ -61,6 +60,13 @@ public class BookController {
         bookRepository.save(book2);
 
         return bookRepository.listAll();
-
     }
+
+    // PUT because it updates book repository
+    @RequestMapping(value = "/clear", method = RequestMethod.PUT)
+    public List<Book> clear() {
+        return bookRepository.dropAll();
+    }
+
+
 }

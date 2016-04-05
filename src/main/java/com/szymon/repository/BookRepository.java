@@ -13,4 +13,5 @@ public interface BookRepository {
     void save(Book book);
     Book delete(int id);
     List<Book> listAll();
+    List<Book> dropAll();
 }

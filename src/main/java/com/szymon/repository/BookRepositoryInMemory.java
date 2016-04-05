@@ -35,4 +35,13 @@ public class BookRepositoryInMemory implements BookRepository {
     public List<Book> listAll() {
         return bookList;
     }
+
+    public List<Book> dropAll() {
+        List<Book> books = new ArrayList<Book>(bookList.size());
+        for (Book book : bookList) {
+            books.add(book);
+        }
+        bookList.clear();
+        return books;
+    }
 }
