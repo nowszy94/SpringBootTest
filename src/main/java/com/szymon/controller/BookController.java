@@ -3,6 +3,8 @@ package com.szymon.controller;
 import com.szymon.domain.Book;
 import com.szymon.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
@@ -60,9 +62,9 @@ public class BookController {
         return bookRepository.findByAuthor(author);
     }
 
-    @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
-    public void exceptionHandler() {
-        System.out.println("MethodArgumentTypeMismatchException occurred");
+    @ExceptionHandler(value = IndexOutOfBoundsException.class)
+    public ResponseEntity<Book> exceptionHandler() {
+        return new ResponseEntity<Book>(HttpStatus.NOT_FOUND);
     }
 
 }
