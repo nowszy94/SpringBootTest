@@ -35,6 +35,23 @@ public class BookRepositoryInMemory implements BookRepository {
         return temp;
     }
 
+    public List<Book> findByAuthor(String author) {
+        List<Book> results = new ArrayList<Book>();
+        for (Book book : bookList) {
+            if(book.getAuthor().equals(author))
+                results.add(book);
+        }
+        return results;
+    }
+
+    public Book findByTitle(String title) {
+        for (Book book : bookList) {
+            if(book.getTitle().equals(title))
+                return book;
+        }
+        return null;
+    }
+
     public List<Book> listAll() {
         return bookList;
     }
@@ -47,16 +64,4 @@ public class BookRepositoryInMemory implements BookRepository {
         bookList.clear();
         return books;
     }
-
-    @PostConstruct
-    public void initWithBasicData() {
-        Book book = new Book.BookBuilder("W pustyni i w puszczy", "Henryk Sienkiewicz").pages(400).build();
-        Book book1 = new Book.BookBuilder("Dziady IV", "Adam Mickiewicz").pages(300).build();
-        Book book2 = new Book.BookBuilder("Krzyzacy", "Henryk Sienkiewicz").pages(900).build();
-
-        save(book);
-        save(book1);
-        save(book2);
-    }
-
 }

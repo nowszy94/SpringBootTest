@@ -12,6 +12,8 @@ public interface BookRepository {
     Book findOne(int id);
     void save(Book book);
     Book delete(int id);
+    Book findByTitle(String title);
+    List<Book> findByAuthor(String author);
     List<Book> listAll();
     List<Book> dropAll();
 }
