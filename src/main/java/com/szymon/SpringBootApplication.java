@@ -1,15 +1,14 @@
 package com.szymon;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Created by szymon.nowak on 01.04.2016.
  */
-@SpringBootApplication
-public class MyExample {
+@org.springframework.boot.autoconfigure.SpringBootApplication
+public class SpringBootApplication {
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(MyExample.class, args);
+        SpringApplication.run(SpringBootApplication.class, args);
     }
 }

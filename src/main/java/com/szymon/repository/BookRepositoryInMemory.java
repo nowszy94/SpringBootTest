@@ -1,8 +1,10 @@
 package com.szymon.repository;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import com.szymon.domain.Book;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,4 +47,16 @@ public class BookRepositoryInMemory implements BookRepository {
         bookList.clear();
         return books;
     }
+
+    @PostConstruct
+    public void initWithBasicData() {
+        Book book = new Book.BookBuilder("W pustyni i w puszczy", "Henryk Sienkiewicz").pages(400).build();
+        Book book1 = new Book.BookBuilder("Dziady IV", "Adam Mickiewicz").pages(300).build();
+        Book book2 = new Book.BookBuilder("Krzyzacy", "Henryk Sienkiewicz").pages(900).build();
+
+        save(book);
+        save(book1);
+        save(book2);
+    }
+
 }
