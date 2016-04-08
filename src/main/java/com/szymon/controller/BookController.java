@@ -3,13 +3,12 @@ package com.szymon.controller;
 import com.szymon.domain.Book;
 import com.szymon.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by szymon.nowak on 04.04.2016.
@@ -42,12 +41,12 @@ public class BookController {
         return bookRepository.dropAll();
     }
 
-    @RequestMapping(value = "/titles/{title}", method = RequestMethod.GET)
+    @RequestMapping(value = "/title/{title}", method = RequestMethod.GET)
     public Book findByTitle(@PathVariable("title") String title) {
         return bookRepository.findByTitle(title);
     }
 
-    @RequestMapping(value = "/authors", method = RequestMethod.GET)
+    @RequestMapping(value = "/author", method = RequestMethod.GET)
     public List<String> listAuthors() {
         List<String> authors = new ArrayList<String>();
         for (Book book : bookRepository.listAll()) {
@@ -56,9 +55,14 @@ public class BookController {
         return authors;
     }
 
-    @RequestMapping(value = "/authors/{author}", method = RequestMethod.GET)
+    @RequestMapping(value = "/author/{author}", method = RequestMethod.GET)
     public List<Book> findByAuthor(@PathVariable("author") String author) {
         return bookRepository.findByAuthor(author);
+    }
+
+    @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
+    public void exceptionHandler() {
+        System.out.println("MethodArgumentTypeMismatchException occurred");
     }
 
 }
