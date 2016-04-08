@@ -19,8 +19,6 @@ public class BookRepositoryInMemory implements BookRepository {
 
 
     public Book findOne(int id) {
-        if (id < 0 || id >= bookList.size())
-            return null;
         return bookList.get(id);
     }
 
@@ -29,8 +27,6 @@ public class BookRepositoryInMemory implements BookRepository {
     }
 
     public Book delete(int id) {
-        if (id < 0 || id >= bookList.size())
-            return null;
         Book temp = bookList.remove(id);
         return temp;
     }
