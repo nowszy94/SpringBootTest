@@ -1,19 +1,18 @@
-package com.szymon.controller;
+package com.cognifide.controller;
 
-import com.szymon.domain.Book;
-import com.szymon.repository.BookRepository;
+import com.cognifide.domain.Book;
+import com.cognifide.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
- * Created by szymon.nowak on 04.04.2016.
+ * Created by cognifide.nowak on 04.04.2016.
  */
 @RestController
 @RequestMapping(value = "/books")
@@ -61,10 +60,4 @@ public class BookController {
     public List<Book> findByAuthor(@PathVariable("author") String author) {
         return bookRepository.findByAuthor(author);
     }
-
-    @ExceptionHandler(value = IndexOutOfBoundsException.class)
-    public ResponseEntity<Book> exceptionHandler() {
-        return new ResponseEntity<Book>(HttpStatus.NOT_FOUND);
-    }
-
 }

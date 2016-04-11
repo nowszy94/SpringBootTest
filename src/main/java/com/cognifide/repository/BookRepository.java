@@ -1,11 +1,11 @@
-package com.szymon.repository;
+package com.cognifide.repository;
 
-import com.szymon.domain.Book;
+import com.cognifide.domain.Book;
 
 import java.util.List;
 
 /**
- * Created by szymon.nowak on 04.04.2016.
+ * Created by cognifide.nowak on 04.04.2016.
  */
 public interface BookRepository {
 

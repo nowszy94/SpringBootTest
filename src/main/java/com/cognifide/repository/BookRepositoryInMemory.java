@@ -1,16 +1,15 @@
-package com.szymon.repository;
+package com.cognifide.repository;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-import com.szymon.domain.Book;
+import com.cognifide.domain.Book;
+import com.cognifide.domain.BookNotFoundException;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by szymon.nowak on 04.04.2016.
+ * Created by cognifide.nowak on 04.04.2016.
  */
 @Component
 public class BookRepositoryInMemory implements BookRepository {
@@ -19,7 +18,11 @@ public class BookRepositoryInMemory implements BookRepository {
 
 
     public Book findOne(int id) {
-        return bookList.get(id);
+        try {
+            return bookList.get(id);
+        } catch (IndexOutOfBoundsException e) {
+            throw new BookNotFoundException();
+        }
     }
 
     public void save(Book book) {
@@ -27,8 +30,12 @@ public class BookRepositoryInMemory implements BookRepository {
     }
 
     public Book delete(int id) {
-        Book temp = bookList.remove(id);
-        return temp;
+        try {
+            Book temp = bookList.remove(id);
+            return temp;
+        } catch (IndexOutOfBoundsException e ) {
+            throw new BookNotFoundException();
+        }
     }
 
     public List<Book> findByAuthor(String author) {
@@ -37,6 +44,8 @@ public class BookRepositoryInMemory implements BookRepository {
             if(book.getAuthor().equals(author))
                 results.add(book);
         }
+        if(results.size() == 0)
+            throw new BookNotFoundException();
         return results;
     }
 
@@ -45,7 +54,7 @@ public class BookRepositoryInMemory implements BookRepository {
             if(book.getTitle().equals(title))
                 return book;
         }
-        return null;
+        throw new BookNotFoundException();
     }
 
     public List<Book> listAll() {
@@ -53,6 +62,8 @@ public class BookRepositoryInMemory implements BookRepository {
     }
 
     public List<Book> dropAll() {
+        if(bookList.size() == 0)
+            throw new BookNotFoundException();
         List<Book> books = new ArrayList<Book>(bookList.size());
         for (Book book : bookList) {
             books.add(book);

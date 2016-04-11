@@ -1,14 +1,14 @@
-package com.szymon;
+package com.cognifide;
 
-import com.szymon.domain.Book;
-import com.szymon.repository.BookRepository;
+import com.cognifide.domain.Book;
+import com.cognifide.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Bean;
 
 /**
- * Created by szymon.nowak on 01.04.2016.
+ * Created by cognifide.nowak on 01.04.2016.
  */
 @org.springframework.boot.autoconfigure.SpringBootApplication
 public class SpringBootApplication {

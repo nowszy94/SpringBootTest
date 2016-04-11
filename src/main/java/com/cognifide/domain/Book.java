@@ -1,10 +1,10 @@
-package com.szymon.domain;
+package com.cognifide.domain;
 
 import lombok.Builder;
 import lombok.Data;
 
 /**
- * Created by szymon.nowak on 04.04.2016.
+ * Created by cognifide.nowak on 04.04.2016.
  */
 @Data
 @Builder
