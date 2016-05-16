@@ -7,22 +7,17 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-/**
- * Created by cognifide.nowak on 04.04.2016.
- */
 @Component
 public class BookRepositoryInMemory implements BookRepository {
 
-    private List<Book> bookList = Collections.synchronizedList(new ArrayList<Book>());
-
+    private List<Book> bookList = Collections.synchronizedList(new ArrayList<>());
 
     public Book findOne(int id) {
-        try {
-            return bookList.get(id);
-        } catch (IndexOutOfBoundsException e) {
-            throw new BookNotFoundException();
-        }
+        if (id < 0 || id >= bookList.size())
+            return null;
+        return bookList.get(id);
     }
 
     public void save(Book book) {
@@ -30,31 +25,24 @@ public class BookRepositoryInMemory implements BookRepository {
     }
 
     public Book delete(int id) {
-        try {
-            Book temp = bookList.remove(id);
-            return temp;
-        } catch (IndexOutOfBoundsException e ) {
-            throw new BookNotFoundException();
-        }
+        if (id < 0 || id >= bookList.size())
+            return null;
+        return bookList.remove(id);
     }
 
     public List<Book> findByAuthor(String author) {
-        List<Book> results = new ArrayList<Book>();
-        for (Book book : bookList) {
-            if(book.getAuthor().equals(author))
-                results.add(book);
-        }
-        if(results.size() == 0)
-            throw new BookNotFoundException();
-        return results;
+        return bookList
+                .stream()
+                .filter((book) -> book.getAuthor().equals(author))
+                .collect(Collectors.toList());
     }
 
     public Book findByTitle(String title) {
         for (Book book : bookList) {
-            if(book.getTitle().equals(title))
+            if (book.getTitle().equals(title))
                 return book;
         }
-        throw new BookNotFoundException();
+        return null;
     }
 
     public List<Book> listAll() {
@@ -62,12 +50,8 @@ public class BookRepositoryInMemory implements BookRepository {
     }
 
     public List<Book> dropAll() {
-        if(bookList.size() == 0)
-            throw new BookNotFoundException();
-        List<Book> books = new ArrayList<Book>(bookList.size());
-        for (Book book : bookList) {
-            books.add(book);
-        }
+        List<Book> books = new ArrayList<>();
+        Collections.copy(books, bookList);
         bookList.clear();
         return books;
     }
